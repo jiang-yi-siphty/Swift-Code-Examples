@@ -10,12 +10,15 @@ let scaleColor = UIColor.init(red: 35.0 / 255.0,
                               green: 210.0 / 255.0,
                               blue: 35.0 / 255.0,
                               alpha: 1).cgColor
-let pixlesTimes: CGFloat = 3.0
+let pixlesTimes: CGFloat = 1.0
 let isFacingNorth: Bool = false
 
 
 extension CALayer{
     
+    /// Disable animation
+    ///
+    /// - Parameter actionsWithoutAnimation: block of the actions
     class func performWithoutAnimation(_ actionsWithoutAnimation: () -> Void){
         CATransaction.begin()
         CATransaction.setValue(true, forKey: kCATransactionDisableActions)
@@ -79,14 +82,18 @@ var hasTopline: Bool = true
 
 
 
-let view = UIView(frame: CGRect(x: 0, y: 0, width: 3773 * pixlesTimes, height: 31 * pixlesTimes))
-view.backgroundColor = UIColor.yellow
+let view = UIView(frame: CGRect(x: 0, y: 0, width: 473 * pixlesTimes, height: 31 * pixlesTimes))
+//view.backgroundColor = UIColor.yellow
 
 
 
 //Heading Tape Layer
 let headingTape = CALayer()
-headingTape.frame = CGRect(x: 0.0, y: 0.0, width: pixelPerUnit * 360.0  * pixlesTimes, height: 31 * pixlesTimes)
+headingTape.frame = CGRect(x: -179.0 * pixelPerUnit, y: 0.0, width: pixelPerUnit * 360.0  * pixlesTimes, height: 31 * pixlesTimes)
+headingTape.borderColor = UIColor.red.cgColor
+headingTape.borderWidth = 1
+headingTape.backgroundColor = UIColor.blue.cgColor
+
 headingTape.sublayers?.forEach { $0.removeFromSuperlayer() }
 let extraHeight = (headingTape.frame.height - (labelHeight + 1.0 + longScalePixels))
 longScalePixels = longScalePixels + extraHeight
@@ -184,21 +191,47 @@ for i in 0 ... 360 {
 view.layer.addSublayer(headingTape)
 
 //Export view to png file
-UIGraphicsBeginImageContextWithOptions(view.layer.frame.size, false, 0.0)
-view.layer.render(in: UIGraphicsGetCurrentContext()!)
-let viewImage = UIGraphicsGetImageFromCurrentImageContext()!
-UIGraphicsEndImageContext()
-let data = UIImagePNGRepresentation(viewImage)
-let documentsDir = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
-print("documentsDir : \(documentsDir)")
-let writePath = documentsDir.appendingPathComponent("myimage.png")!
-let writeError = try! data?.write(to: writePath)
-print("error: \(writeError)")
-    
-print(writePath.description)
+//UIGraphicsBeginImageContextWithOptions(view.layer.frame.size, false, 0.0)
+//view.layer.render(in: UIGraphicsGetCurrentContext()!)
+//let viewImage = UIGraphicsGetImageFromCurrentImageContext()!
+//UIGraphicsEndImageContext()
+//let data = UIImagePNGRepresentation(viewImage)
+//let documentsDir = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
+//print("documentsDir : \(documentsDir)")
+//let writePath = documentsDir.appendingPathComponent("myimage.png")!
+//let writeError = try! data?.write(to: writePath)
+//print("error: \(writeError)")
+//    
+//print(writePath.description)
 
-view.backgroundColor = UIColor.yellow
+//view.backgroundColor = UIColor.yellow
 PlaygroundPage.current.liveView = view
 PlaygroundPage.current.needsIndefiniteExecution = true
+
+
+//Animation - Transaction
+
+headingTape.frame = CGRect(x: 0.0 * pixelPerUnit, y: 0.0, width: pixelPerUnit * 360.0  * pixlesTimes, height: 31 * pixlesTimes)
+
+print("Heading Tape position: \(headingTape.position.debugDescription)")
+print("Heading Tape frame: \(headingTape.frame.debugDescription)")
+CATransaction.begin()
+CATransaction.setAnimationDuration(0)
+CATransaction.setDisableActions(true)
+CATransaction.setCompletionBlock({
+    print("Transaction completed")
+    print("Heading Tape position: \(headingTape.position.debugDescription)")
+    print("Heading Tape frame: \(headingTape.frame.debugDescription)")
+})
+let animation = CABasicAnimation(keyPath: "position")
+animation.fromValue = headingTape.position
+animation.toValue = CGPoint(x: -90.0 * pixelPerUnit, y : headingTape.position.y)
+headingTape.add(animation, forKey: "position")
+//headingTape.animation
+CATransaction.commit()
+
+
+
+
 
 
