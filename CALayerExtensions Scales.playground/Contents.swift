@@ -191,18 +191,18 @@ for i in 0 ... 360 {
 view.layer.addSublayer(headingTape)
 
 //Export view to png file
-//UIGraphicsBeginImageContextWithOptions(view.layer.frame.size, false, 0.0)
-//view.layer.render(in: UIGraphicsGetCurrentContext()!)
-//let viewImage = UIGraphicsGetImageFromCurrentImageContext()!
-//UIGraphicsEndImageContext()
-//let data = UIImagePNGRepresentation(viewImage)
-//let documentsDir = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
-//print("documentsDir : \(documentsDir)")
-//let writePath = documentsDir.appendingPathComponent("myimage.png")!
-//let writeError = try! data?.write(to: writePath)
-//print("error: \(writeError)")
-//    
-//print(writePath.description)
+UIGraphicsBeginImageContextWithOptions(view.layer.frame.size, false, 0.0)
+view.layer.render(in: UIGraphicsGetCurrentContext()!)
+let viewImage = UIGraphicsGetImageFromCurrentImageContext()!
+UIGraphicsEndImageContext()
+let data = UIImagePNGRepresentation(viewImage)
+let documentsDir = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
+print("documentsDir : \(documentsDir)")
+let writePath = documentsDir.appendingPathComponent("myimage.png")!
+let writeError = try! data?.write(to: writePath)
+print("error: \(writeError)")
+    
+print(writePath.description)
 
 //view.backgroundColor = UIColor.yellow
 PlaygroundPage.current.liveView = view
