@@ -5,7 +5,7 @@ import UIKit
 import XCPlayground
 import PlaygroundSupport
 //let view = UIView(frame: CGRect(x: 0, y: 0, width: 1000, height: 540))
-let imageNameString = "B737-1-300x300.png"
+let imageNameString = "JetTwoEngMedium(31.2m)Bombardier Global 8000.png"
 let image = UIImage(named: imageNameString)
 let widthInPoints = image?.size.width
 let heightInPoints = image?.size.height
