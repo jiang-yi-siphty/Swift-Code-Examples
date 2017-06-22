@@ -1,5 +1,4 @@
 //: A UIKit based Playground to present user interface
-  
 import UIKit
 import PlaygroundSupport
 
@@ -16,7 +15,7 @@ class myViewController : UIViewController {
         
         view.addSubview(label)
         self.view = view
-        view.frame = CGRect(x: 0, y: 0, width: 300, height: 700)
+        view.frame = CGRect(x: 0, y: 0, width: 300, height: 1200)
         view.backgroundColor = UIColor.gray
         drawAltitudeColorStick()
         
@@ -27,7 +26,7 @@ class myViewController : UIViewController {
     
     func drawAltitudeColorStick() {
         let altitudeStickLayer = CALayer()
-        altitudeStickLayer.frame = CGRect(x: 45, y: 45, width: 40, height: 700)// view.frame.height - 10)
+        altitudeStickLayer.frame = CGRect(x: 45, y: 10, width: 40, height: view.frame.height - 20)
         
         let colorStickLayer = CAGradientLayer()
         colorStickLayer.frame = CGRect(x: 0, y: 0, width: 8, height: altitudeStickLayer.bounds.height)
@@ -42,11 +41,8 @@ class myViewController : UIViewController {
         colorStickLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
         altitudeStickLayer.addSublayer(colorStickLayer)
         
-//        drawAltitudeScale(by: [100, 200, 500, 1000, 4000], on: altitudeStickLayer)
-        
-        
+        drawAltitudeScale(by: [0, 400, 2000, 5000, 10000, 20000, 40000], on: altitudeStickLayer)
         view.layer.addSublayer(altitudeStickLayer)
-        
         
         let selectedColor = getColorfromPixel(CGPoint(x: 4, y: 150), from: colorStickLayer)
         selectedColorView.backgroundColor = selectedColor
@@ -96,7 +92,7 @@ class myViewController : UIViewController {
     
     func getLayerHeight(by altitude: CGFloat, on layer: CALayer) -> CGFloat{
         let maxiumAltitude: CGFloat = 40000.0
-        let scaleY = CGFloat(1 - sqrt(altitude) / sqrt(maxiumAltitude)) * layer.frame.height
+         let scaleY = CGFloat(1 - sqrt(100 * altitude / maxiumAltitude) / 10) * layer.frame.height
         return scaleY
     }
     
