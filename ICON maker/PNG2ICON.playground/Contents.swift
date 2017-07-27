@@ -5,7 +5,7 @@ import UIKit
 import XCPlayground
 import PlaygroundSupport
 //let view = UIView(frame: CGRect(x: 0, y: 0, width: 1000, height: 540))
-let imageNameString = "JetTwoEngMedium(31.2m)Bombardier Global 8000.png"
+let imageNameString = "cessna.png"
 let image = UIImage(named: imageNameString)
 let widthInPoints = image?.size.width
 let heightInPoints = image?.size.height
@@ -41,6 +41,7 @@ extension CALayer{
 
 let shadowView: UIView = {
     let shadowView = UIView(frame: view.frame)
+    shadowView.layer.backgroundColor = #colorLiteral(red: 0, green: 0.9768045545, blue: 0, alpha: 1).cgColor
     shadowView.layer.backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1).cgColor
     shadowView.layer.doMask(by: UIImage(named: imageNameString)!)
     return shadowView
